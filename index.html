@@ -38,7 +38,7 @@
         var map = new Map();
         map.tiles = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 2, 0, 2, 2, 2, 2, 2, 0],
+            [0, 2, 2, 2, 2, 2, 2, 2, 0],
             [0, 2, 0, 0, 2, 0, 0, 2, 0],
             [0, 2, 2, 2, 2, 0, 0, 2, 0],
             [0, 2, 0, 2, 2, 0, 0, 2, 0],
@@ -48,10 +48,23 @@
         var player = {
             posX: 1,
             posY: 1,
-            orientVec: 2
+            orient: 2
         }
 
         render.render(player, map);
+
+        document.addEventListener('keydown', (event) => {
+            const keyName = event.key;
+            switch(keyName) {
+                case "ArrowUp": 
+                    player.posY += 1;
+                    break;
+            }
+
+            ctx.fillStyle = "#eeeeee";
+            ctx.fillRect(0, 0, 800, 600);
+            render.render(player, map);
+        });
 
         console.log(render);
         console.log(map);

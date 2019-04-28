@@ -51,8 +51,23 @@ Render = class {
     render(player, map) {
         for (let y = 0; y < this.settings.renderCellDistance; y++) {
             for (let x = -this.settings.renderCellWidth; x < this.settings.renderCellWidth + 1; x++) {
-                
-                const cell = map.tile(player.posX + x, player.posY + y);
+                let cellPos;
+                switch (player.orient) {
+                    case 0:
+                        cellPos = { x: player.posX - x, y: player.posY - y};
+                        break;
+                    case 1:
+                        cellPos = { x: player.posX + y, y: player.posY - x};
+                        break;
+                    case 2:
+                        cellPos = { x: player.posX + x, y: player.posY + y};
+                        break;
+                    case 3:
+                        cellPos = { x: player.posX - y, y: player.posY + x};
+                        break;
+                   
+                }
+                const cell = map.tile(cellPos.x, cellPos.y);
                 this._renderCell(x, -y, cell);
             }
         }
