@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>RPG</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="src/graphics.js"></script>
+    <script type="text/javascript" src="src/map.js"></script>
+    <script type="text/javascript" src="src/render.js"></script>
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        canvas.width = 800;
+        canvas.height = 600;
+        canvas.style.width = canvas.width;
+        canvas.style.height = canvas.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#eeeeee";
+        ctx.fillRect(0, 0, 800, 600);
+
+        var renderSettings = {
+            yMin: -6,
+            yMax: 1,
+            xMin: -3,
+            xMax: 5,
+            cellSize: 100,
+            cellHeight: 80,
+            playerHeight: 50,
+            windowWidth: 800,
+            windowHeight: 400,
+            distance: 700,
+            renderCellDistance: 6,
+            renderCellWidth: 2
+        };
+        var render = new Render(renderSettings);
+        var map = new Map();
+        map.tiles = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 2, 0, 2, 2, 2, 2, 2, 0],
+            [0, 2, 0, 0, 2, 0, 0, 2, 0],
+            [0, 2, 2, 2, 2, 0, 0, 2, 0],
+            [0, 2, 0, 2, 2, 0, 0, 2, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+
+        var player = {
+            posX: 1,
+            posY: 1,
+            orientVec: 2
+        }
+
+        render.render(player, map);
+
+        console.log(render);
+        console.log(map);
+    </script>
+</body>
+
+</html>
