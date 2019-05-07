@@ -25,4 +25,10 @@ Graphics = class {
         ctx.fill();
         ctx.stroke();
     }
+
+    static text(string, p) {
+        ctx.fillStyle = "#000";
+        ctx.font = "20px Arial";
+        ctx.fillText(string, p.x, p.y);
+    }
 }

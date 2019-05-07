@@ -8,10 +8,10 @@ Render = class {
 
     _transform(p) {
         const r = this.settings.distance / p.z;
-        return {
-            x: this.settings.windowWidth / 2 + r * p.x,
-            y: this.settings.windowHeight / 2 + r * p.y
-        }
+        return new Point(
+            this.settings.windowWidth / 2 + r * p.x,
+            this.settings.windowHeight / 2 + r * p.y
+        );
     };
 
     _cellPoints(x, y, height) {
@@ -42,12 +42,25 @@ Render = class {
     _renderCell(x, y, cellPos) {
         const cell = this.map.tile(cellPos);
         if (cell > 0) {
-            y -= 1;
-            const f = this._cellPoints(x, y, -this.settings.playerHeight);
-            const c = this._cellPoints(x, y, this.settings.cellHeight - this.settings.playerHeight);
+
+            const f = this._cellPoints(x, y - 1, -this.settings.playerHeight);
+            const c = this._cellPoints(x, y - 1, this.settings.cellHeight - this.settings.playerHeight);
 
             Graphics.poly(f.a, f.b, f.c, f.d);
             Graphics.poly(c.a, c.b, c.c, c.d);
+
+            let frontCell = this.map.tile(this._cellMapRenderPlayerPosition(x, -y + 1));
+            if (frontCell == 0) {
+                Graphics.poly(f.a, f.b, c.b, c.a);
+            }
+            let rightCell = this.map.tile(this._cellMapRenderPlayerPosition(x - 1, -y));
+            if (rightCell == 0) {
+                Graphics.poly(f.a, f.d, c.d, c.a);
+            }
+            let leftCell = this.map.tile(this._cellMapRenderPlayerPosition(x + 1, -y));
+            if (leftCell == 0) {
+                Graphics.poly(f.b, f.c, c.c, c.b);
+            }
         }
     }
 
