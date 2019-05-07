@@ -1,7 +1,9 @@
 
 Render = class {
-    constructor(settings) {
+    constructor(settings, map, player) {
         this.settings = settings;
+        this.map = map;
+        this.player = player;
     }
 
     _transform(p) {
@@ -37,7 +39,8 @@ Render = class {
         }
     }
 
-    _renderCell(x, y, cell) {
+    _renderCell(x, y, cellPos) {
+        const cell = this.map.tile(cellPos);
         if (cell > 0) {
             y -= 1;
             const f = this._cellPoints(x, y, -this.settings.playerHeight);
@@ -48,28 +51,25 @@ Render = class {
         }
     }
 
-    render(player, map) {
-        for (let y = 0; y < this.settings.renderCellDistance; y++) {
+    render() {
+        for (let y = this.settings.renderCellDistance; y >= 0; y--) {
             for (let x = -this.settings.renderCellWidth; x < this.settings.renderCellWidth + 1; x++) {
-                let cellPos;
-                switch (player.orientation) {
-                    case 0:
-                        cellPos = { x: player.posX - x, y: player.posY - y};
-                        break;
-                    case 1:
-                        cellPos = { x: player.posX + y, y: player.posY - x};
-                        break;
-                    case 2:
-                        cellPos = { x: player.posX + x, y: player.posY + y};
-                        break;
-                    case 3:
-                        cellPos = { x: player.posX - y, y: player.posY + x};
-                        break;
-                   
-                }
-                const cell = map.tile(cellPos.x, cellPos.y);
-                this._renderCell(x, -y, cell);
+                this._renderCell(x, -y, this._cellMapRenderPlayerPosition(x, y));
             }
+        }
+    }
+
+    _cellMapRenderPlayerPosition(x, y) {
+        let newPos = this.player.pos.clone();
+        switch (this.player.orientation) {
+            case 0:
+                return newPos.add(-x, -y);
+            case 1:
+                return newPos.add(y, -x);
+            case 2:
+                return newPos.add(x, y);
+            case 3:
+                return newPos.add(-y, x);
         }
     }
 };

@@ -6,6 +6,7 @@
 
 <body>
     <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="src/point.js"></script>
     <script type="text/javascript" src="src/graphics.js"></script>
     <script type="text/javascript" src="src/player.js"></script>
     <script type="text/javascript" src="src/map.js"></script>
@@ -35,7 +36,6 @@
             renderCellDistance: 6,
             renderCellWidth: 2
         };
-        var render = new Render(renderSettings);
         var player = new Player();
         var map = new Map();
         map.tiles = [
@@ -46,7 +46,8 @@
             [0, 2, 0, 2, 2, 0, 0, 2, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        render.render(player, map);
+        var render = new Render(renderSettings, map, player);
+        render.render();
 
         document.addEventListener('keydown', (event) => {
             const keyName = event.key;
@@ -67,11 +68,12 @@
 
             ctx.fillStyle = "#eeeeee";
             ctx.fillRect(0, 0, 800, 600);
-            render.render(player, map);
+            render.render();
         });
 
         console.log(render);
         console.log(map);
+        console.log(player);
     </script>
 </body>
 

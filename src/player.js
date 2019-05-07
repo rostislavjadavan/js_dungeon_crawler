@@ -1,8 +1,7 @@
 
 Player = class {
     constructor() {
-        this.posX = 1;
-        this.posY = 1;
+        this.pos = new Point(1, 1);
         this.orientation = 2;
     }
 
@@ -29,27 +28,23 @@ Player = class {
     }
 
     _go(map, step) {
+        let newPos = this.pos.clone();
         switch(this.orientation) {
             case 0: 
-                if (map.tile(this.posX, this.posY - step) > 0) {
-                    this.posY -= step;
-                }
+                newPos.add(0, -step);
                 break;
             case 1: 
-                if (map.tile(this.posX + step, this.posY) > 0) {
-                    this.posX += step;
-                }
+                newPos.add(step, 0);
                 break;
             case 2: 
-                if (map.tile(this.posX, this.posY + step) > 0) {
-                    this.posY += step;
-                }
+                newPos.add(0, step);
                 break;
             case 3: 
-                if (map.tile(this.posX - step, this.posY) > 0) {
-                    this.posX -= step;
-                }
+                newPos.add(-step, 0);
                 break;
+        }
+        if (map.tile(newPos) > 0) {
+            this.pos = newPos;
         }
     }
 }

@@ -4,9 +4,9 @@ Map = class {
         this.tiles = [];
     }
 
-    tile(x, y) {
-        if (y >= 0 && y < this.tiles.length && x >= 0 && x < this.tiles[y].length) {
-            return this.tiles[y][x];
+    tile(p) {
+        if (p.y >= 0 && p.y < this.tiles.length && p.x >= 0 && p.x < this.tiles[p.y].length) {
+            return this.tiles[p.y][p.x];
         }
         return 0;
     }
