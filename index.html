@@ -7,6 +7,7 @@
 <body>
     <canvas id="canvas"></canvas>
     <script type="text/javascript" src="src/graphics.js"></script>
+    <script type="text/javascript" src="src/player.js"></script>
     <script type="text/javascript" src="src/map.js"></script>
     <script type="text/javascript" src="src/render.js"></script>
     <script type="text/javascript">
@@ -35,6 +36,7 @@
             renderCellWidth: 2
         };
         var render = new Render(renderSettings);
+        var player = new Player();
         var map = new Map();
         map.tiles = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -44,20 +46,22 @@
             [0, 2, 0, 2, 2, 0, 0, 2, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-
-        var player = {
-            posX: 1,
-            posY: 1,
-            orient: 2
-        }
-
         render.render(player, map);
 
         document.addEventListener('keydown', (event) => {
             const keyName = event.key;
             switch(keyName) {
                 case "ArrowUp": 
-                    player.posY += 1;
+                    player.moveForward(map);
+                    break;
+                case "ArrowDown": 
+                    player.moveBackward(map);
+                    break;
+                case "ArrowLeft": 
+                    player.turnLeft();
+                    break;
+                case "ArrowRight": 
+                    player.turnRight();
                     break;
             }
 

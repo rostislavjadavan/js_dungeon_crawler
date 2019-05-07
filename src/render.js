@@ -52,7 +52,7 @@ Render = class {
         for (let y = 0; y < this.settings.renderCellDistance; y++) {
             for (let x = -this.settings.renderCellWidth; x < this.settings.renderCellWidth + 1; x++) {
                 let cellPos;
-                switch (player.orient) {
+                switch (player.orientation) {
                     case 0:
                         cellPos = { x: player.posX - x, y: player.posY - y};
                         break;
