@@ -2,24 +2,37 @@
 
 <head>
     <title>RPG</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+        }
+        .container {
+            width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+    </div>
     <script type="text/javascript" src="src/point.js"></script>
+    <script type="text/javascript" src="src/assets.js"></script>
     <script type="text/javascript" src="src/graphics.js"></script>
     <script type="text/javascript" src="src/player.js"></script>
     <script type="text/javascript" src="src/map.js"></script>
     <script type="text/javascript" src="src/render.js"></script>
     <script type="text/javascript">
         var canvas = document.getElementById("canvas");
-        canvas.width = 800;
+        canvas.width = 1000;
         canvas.height = 600;
-        canvas.style.width = canvas.width;
-        canvas.style.height = canvas.height;
 
         var ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#eeeeee";
+        ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, 800, 600);
 
         var renderSettings = {
@@ -30,10 +43,10 @@
             cellSize: 100,
             cellHeight: 80,
             playerHeight: 50,
-            windowWidth: 800,
+            windowWidth: 1000,
             windowHeight: 400,
             distance: 700,
-            renderCellDistance: 10,
+            renderCellDistance: 5,
             renderCellWidth: 2
         };
         var player = new Player();
@@ -62,26 +75,37 @@
         ];
         */
         var render = new Render(renderSettings, map, player);
-        render.render();
+
+        var textures = [
+            'metal01.jpg',
+            'metal02.jpg',
+            'metal03.jpg',
+            'metal04.jpg'
+        ];
+        var assets = new Assets();
+        assets.load(textures, () => {
+            render.assets = assets;
+            render.render();
+        });
 
         document.addEventListener('keydown', (event) => {
             const keyName = event.key;
-            switch(keyName) {
-                case "ArrowUp": 
+            switch (keyName) {
+                case "ArrowUp":
                     player.moveForward(map);
                     break;
-                case "ArrowDown": 
+                case "ArrowDown":
                     player.moveBackward(map);
                     break;
-                case "ArrowLeft": 
+                case "ArrowLeft":
                     player.turnLeft();
                     break;
-                case "ArrowRight": 
+                case "ArrowRight":
                     player.turnRight();
                     break;
             }
 
-            ctx.fillStyle = "#eeeeee";
+            ctx.fillStyle = "#000";
             ctx.fillRect(0, 0, 800, 600);
             render.render();
         });
