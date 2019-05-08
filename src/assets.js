@@ -12,7 +12,6 @@ Assets = class {
     image(name) {
         for (const index in this.images) {
             const image = this.images[index];
-            console.log(image.src);
             if (image.name == name) {
                 return image;
             }
