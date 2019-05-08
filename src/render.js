@@ -6,6 +6,14 @@ Render = class {
         this.player = player;
     }
 
+    render() {
+        for (let y = this.settings.renderCellDistance; y >= 0; y--) {
+            for (let x = -this.settings.renderCellWidth; x < this.settings.renderCellWidth + 1; x++) {
+                this._renderCell(x, y, this._cellMapRenderPlayerPosition(x, y));
+            }
+        }
+    }
+
     _transform(p) {
         const r = this.settings.distance / -p.z;
         return new Point(
@@ -61,14 +69,6 @@ Render = class {
             let leftCell = this.map.tile(this._cellMapRenderPlayerPosition(x + 1, y));
             if (leftCell == 0) {
                 Graphics.poly(f.b, f.c, c.c, c.b);
-            }
-        }
-    }
-
-    render() {
-        for (let y = this.settings.renderCellDistance; y >= 0; y--) {
-            for (let x = -this.settings.renderCellWidth; x < this.settings.renderCellWidth + 1; x++) {
-                this._renderCell(x, y, this._cellMapRenderPlayerPosition(x, y));
             }
         }
     }
