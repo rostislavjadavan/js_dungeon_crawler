@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title>RPG</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+        }
+        .container {
+            width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+    <script type="text/javascript" src="src/point.js"></script>
+    <script type="text/javascript" src="src/assets.js"></script>
+    <script type="text/javascript" src="src/graphics.js"></script>
+    <script type="text/javascript" src="src/player.js"></script>
+    <script type="text/javascript" src="src/map.js"></script>
+    <script type="text/javascript" src="src/render.js"></script>
+
+
+    <script type="text/javascript" src="src/basicmaterialshader.js"></script>
+    <script type="text/javascript" src="src/triangle.js"></script>
+    <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        canvas.width = 1000;
+        canvas.height = 600;
+
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, 800, 600);
+
+        var textures = [
+            'metal01.jpg',
+            'metal02.jpg',
+            'metal03.jpg',
+            'metal04.jpg'
+        ];
+        var assets = new Assets();
+        assets.load(textures, () => {
+            render.assets = assets;
+            render.render();
+        });
+
+        
+    </script>
+</body>
+
+</html>
